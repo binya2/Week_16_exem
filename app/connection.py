@@ -22,6 +22,9 @@ def get_database():
 
 
 def connect_to_mongo():
+    if db.client:
+        print("MongoDB connection already established.")
+        return
     print(f"Connecting to MongoDB at: {settings.MONGODB_URL}...")
     try:
         db.client = MongoClient(settings.MONGODB_URL)
@@ -58,15 +61,15 @@ def load_json_file(filename: str):
 def seed_database():
     print("Checking if database seeding is needed...")
     mongo_db = settings.DATABASE_NAME
-    fail_name = settings.COLLECTION
-    folder = fail_name.split(".")[0]
-    if db.client[mongo_db][folder].count_documents({}) == 0:
-        print(f"Running seed for: {folder}.")
+    collection = settings.COLLECTION
+    fail_name = collection + ".json"
+    if db.client[mongo_db][collection].count_documents({}) == 0:
+        print(f"Running seed for: {collection}.")
         data = load_json_file(fail_name)
         if data:
-            db.client[mongo_db][folder].insert_many(data)
+            db.client[mongo_db][collection].insert_many(data)
             print("seeded successfully.")
     else:
-        print(f"{folder} collection is not empty. Skipping.")
+        print(f"{collection} collection is not empty. Skipping.")
 
     print("Seeding process completed.")
