@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Kubernetes
+k8s/
+
+# Documentation
+README.md
+*.md
+
+# Development/Testing
+requ.http
+*.http

@@ -3,7 +3,7 @@ from pathlib import Path
 
 from pymongo import MongoClient
 
-from app.config import settings
+from config import settings
 
 
 #########################################################################

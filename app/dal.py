@@ -1,11 +1,12 @@
 import pymongo
 
 from config import settings
-from connection import get_database
+from connection import get_database, connect_to_mongo
 
 
 class DAL:
     def __init__(self):
+        connect_to_mongo()
         self.db = get_database()
         self.collection = self.db[settings.COLLECTION]
 
