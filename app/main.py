@@ -16,7 +16,7 @@ async def startup_event():
     seed_database()
 
 
-app.add_event_handler("startup", startup_event)
+# app.add_event_handler("startup", startup_event)
 app.add_event_handler("shutdown", close_mongo_connection)
 
 app.include_router(router)
