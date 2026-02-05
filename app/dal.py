@@ -1,13 +1,11 @@
 import pymongo
 
 from config import settings
-from connection import get_database, connect_to_mongo, seed_database
+from connection import get_database
 
 
 class DAL:
     def __init__(self):
-        connect_to_mongo()
-        seed_database()
         self.db = get_database()
         self.collection = self.db[settings.COLLECTION]
 
@@ -90,8 +88,7 @@ class DAL:
         return list(serialize_docs(result))
 
 
-
-def serialize_doc(doc:dict):
+def serialize_doc(doc: dict):
     if doc and "_id" in doc:
         doc["_id"] = doc["_id"].__str__()
     return doc
@@ -99,7 +96,6 @@ def serialize_doc(doc:dict):
 
 def serialize_docs(docs: list[dict]):
     return [serialize_doc(doc) for doc in docs]
-
 
 # db = DAL()
 # print(db.get_employees_by_age_and_role())
