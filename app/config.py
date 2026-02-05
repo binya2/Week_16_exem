@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     SERVER_HOST: str = "0.0.0.0"
     SERVER_PORT: int = 8000
     DEBUG: bool = True
-    PROJECT_NAME: str = "Ecommerce API"
 
 
 settings = Settings()
