@@ -1,0 +1,19 @@
+###1
+GET http://localhost:8000/employees/engineering/high-salary
+
+###2
+GET http://localhost:8000/employees/by-age-and-role
+
+###3
+GET http://localhost:8000/employees/top-seniority
+
+###4
+GET http://localhost:8000/employees/engineering/age-or-seniority
+
+###5
+GET http://localhost:8000/employees/managers/excluding-departments
+
+###6
+GET http://localhost:8000/employees/by-lastname-and-age
+
+###

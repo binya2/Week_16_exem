@@ -24,19 +24,19 @@ class DAL:
             'salary': {'$gt': 65000}
         }
         result = self.collection.find(query, projection)
-        return list(result)
+        return list(serialize_docs(result))
 
     # 2
     def get_employees_by_age_and_role(self):
-        projection = {}
+        projection = {'_id': 0}
         query = {
             "age": {"$gte": 30, "$lte": 45},
             "job_role.title":
                 {"$in": ["Specialist", "Engineer"]}
         }
 
-        result = self.collection.find(query["age"], projection)
-        return list(result)
+        result = self.collection.find(query, projection)
+        return list(serialize_docs(result))
 
     # 3
     def get_top_seniority_employees_excluding_hr(self):
@@ -45,7 +45,8 @@ class DAL:
             'job_role.department': {"$ne": "HR"}
         }
         result = self.collection.find(query, projection).limit(7).sort([('years_at_company', pymongo.DESCENDING)])
-        return list(result)
+        result = [{**doc, '_id': str(doc['_id'])} for doc in result]
+        return list(serialize_docs(result))
 
     # 4
     def get_employees_by_age_or_seniority(self):
@@ -60,7 +61,7 @@ class DAL:
             ]
         }
         result = self.collection.find(query, projection)
-        return list(result)
+        return list(serialize_docs(result))
 
     # 5
     def get_managers_excluding_departments(self):
@@ -70,7 +71,8 @@ class DAL:
             'job_role.department': {'$nin': ['Sales', 'Marketing']}
         }
         result = self.collection.find(query, projection)
-        return list(result)
+        result = [{**doc, '_id': str(doc['_id'])} for doc in result]
+        return list(serialize_docs(result))
 
     # 6
     def get_employees_by_lastname_and_age(self):
@@ -85,4 +87,19 @@ class DAL:
             'age': {'$lt': 35}}
 
         result = self.collection.find(query, projection)
-        return list(result)
+        return list(serialize_docs(result))
+
+
+
+def serialize_doc(doc:dict):
+    if doc and "_id" in doc:
+        doc["_id"] = doc["_id"].__str__()
+    return doc
+
+
+def serialize_docs(docs: list[dict]):
+    return [serialize_doc(doc) for doc in docs]
+
+
+# db = DAL()
+# print(db.get_employees_by_age_and_role())
